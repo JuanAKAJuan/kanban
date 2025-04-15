@@ -1,47 +1,46 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+	<div class="kanban">
+		<h1>Kanban</h1>
+		<div class="columns-container">
+			<div v-for="column in columns" :key="column.id" class="column"></div>
+		</div>
+	</div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<script setup lang="ts">
+import { ref } from "vue";
+
+interface Card {
+	id: number;
+	text: string;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+interface Column {
+	id: number;
+	title: string;
+	cards: Card[];
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+const columns = ref<Column[]>([
+	{
+		id: 1,
+		title: "To Do",
+		cards: [
+			{ id: 101, text: "Design the login page." },
+			{ id: 102, text: "Setup the database schema." },
+		],
+	},
+	{
+		id: 2,
+		title: "In Progress",
+		cards: [{ id: 201, text: "Develop the API endpoints." }],
+	},
+	{
+		id: 3,
+		title: "Done",
+		cards: [{ id: 301, text: "Initialize the Vue project." }],
+	},
+]);
+</script>
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style scoped></style>
